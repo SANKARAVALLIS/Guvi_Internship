@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Animated Login Form | CodingNepal</title>
+    <link rel="stylesheet" href="login.css">
+    <style>
+      background-image: url("images.jpg");
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <h1>Login</h1>
+      <form method="post">
+        <div class="txt_field">
+          <input type="text" required>
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" required>
+          <span></span>
+          <label>Password</label>
+        </div>
+        <div class="pass">Forgot Password?</div>
+        <input type="submit" value="Login">
+        <div class="signup_link">
+          Not a member? <a href="signup.html">Signup</a>
+        </div>
+      </form>
+    </div>
+    <?php  
+    if(isset($_POST["submit"])){  
+      
+    if(!empty($_POST['user']) && !empty($_POST['pass'])) {  
+        $user=$_POST['user'];  
+        $pass=$_POST['pass'];  
+      
+        $con=mysql_connect('localhost','root','') or die(mysql_error());  
+        mysql_select_db('user_registration') or die("cannot select DB");  
+      
+        $query=mysql_query("SELECT * FROM login WHERE username='".$user."' AND password='".$pass."'");  
+        $numrows=mysql_num_rows($query);  
+        if($numrows!=0)  
+        {  
+        while($row=mysql_fetch_assoc($query))  
+        {  
+        $dbusername=$row['username'];  
+        $dbpassword=$row['password'];  
+        }  
+      
+        if($user == $dbusername && $pass == $dbpassword)  
+        {  
+        session_start();  
+        $_SESSION['sess_user']=$user;  
+      
+        /* Redirect browser */  
+        header("Location: member.php");  
+        }  
+        } else {  
+        echo "Invalid username or password!";  
+        }  
+      
+    } else {  
+        echo "All fields are required!";  
+    }  
+    }  
+    ?>  
+  </body>
+</html>

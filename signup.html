@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page - Four Leaf Clover </title>
+    <link rel="stylesheet" href="signup.css">
+    <script src="https://kit.fontawesome.com/e9bde25065.js" crossorigin="anonymous"></script>
+</head>    
+<body>
+   <section class="header">
+    <div class="head">
+        <h1>Create an account</h1> 
+        <div class="sign-box">
+            <div class="left-box">
+                <form>
+                    <input type="text" placeholder="User name" required class="input-box">
+                    <input type="email" placeholder="Your email id" required class="input-box"> 
+                    <input type="phone number" placeholder="phone number" required class="input-box"> 
+                        <fieldset>
+                          <legend>GENDER:</legend>
+                          <div><br>
+                            <input type="radio" id="contactChoice1" name="contact" value="MALE" />
+                            <label for="contactChoice1">MALE</label>
+                      
+                            <input type="radio" id="contactChoice2" name="contact" value="FEMALE" />
+                            <label for="contactChoice2">FEMALE</label>
+                      
+                            <input type="radio" id="contactChoice3" name="contact" value="OTHER" />
+                            <label for="contactChoice3">OTHER</label>
+                            </br>
+                          </div>
+                        </fieldset>
+                        <div><br>
+                    <label for="birthdaytime">DOB:</label>
+                    <input type="date" id="DOB" name="DOB">
+                    <input type="submit" value="Submit">
+                </br></div>
+                    <div>
+                        <br>
+                    <label for="pwd">Password:</label><input type="text" id="username" name="username"></form></br></div>
+                    <input type="checkbox" id="terms">
+                    <label for="terms">I accept the terms & conditions</label><br>
+                    <button type="submit">SIGN UP<span>&#x27f6;</span></button>
+                </form>
+            </div>
+            <div class="right-box">
+                <a href="" class="fb-link"><i class="fa-brands fa-facebook"></i> Connect with Facebook</a>
+                <a href="" class="tw-link"><i class="fa-brands fa-twitter"></i> Connect with Twitter</a>
+                <a href="" class="gl-link"><i class="fa-brands fa-google"></i>Connect with Google</a>
+            </div>
+        </div>
+        <p class="login-msg">I already have an account? <a href="login.html">Login Now</a></p>
+    </div>
+    <?php  
+    if(isset($_POST["submit"])){  
+    if(!empty($_POST['user']) && !empty($_POST['pass'])) {  
+        $user=$_POST['user'];  
+        $pass=$_POST['pass'];  
+        $con=mysql_connect('localhost','root','') or die(mysql_error());  
+        mysql_select_db('user_registration') or die("cannot select DB");  
+      
+        $query=mysql_query("SELECT * FROM login WHERE username='".$user."'");  
+        $numrows=mysql_num_rows($query);  
+        if($numrows==0)  
+        {  
+        $sql="INSERT INTO login(username,password) VALUES('$user','$pass')";  
+      
+        $result=mysql_query($sql);  
+            if($result){  
+        echo "Account Successfully Created";  
+        } else {  
+        echo "Failure!";  
+        }  
+      
+        } else {  
+        echo "That username already exists! Please try again with another.";  
+        }  
+      
+    } else {  
+        echo "All fields are required!";  
+    }  
+    }  
+    ?>  
+   </section> 
+   
+</body>
+</html>
